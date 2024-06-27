@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:islamic_app/app/routes/app_pages.dart';
 
 class RegisteView extends GetView {
   RegisteView({Key? key}) : super(key: key);
@@ -70,16 +70,12 @@ class RegisteView extends GetView {
                   onPressed: () => _signUp(context),
                   child: const Text('Sign Up'),
                 ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (context) => const PhoneAuth()),
-                //     );
-                //   },
-                //   child: const Text('Phone auth'),
-                // ),
+                ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.USER_API);
+                  },
+                  child: const Text('user Profile'),
+                ),
                 // ElevatedButton(
                 //   onPressed: () {
                 //     Navigator.push(
