@@ -186,7 +186,7 @@ class MusicView extends GetView<HomeController> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Get.toNamed(Routes.REGISTE);
+                        Get.toNamed(Routes.REGISTER);
                       },
                       child: const Text('Register'))
                 ],

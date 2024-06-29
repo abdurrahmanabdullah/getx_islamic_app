@@ -116,20 +116,32 @@ class HomeController extends GetxController {
   // This condition checks if music is currently playing (isPlaying.value is true) and if the URL of the current song (currentSong.value) is different from the new URL (url).
   // If both conditions are met, it means that a different song needs to be played, so the current song should be paused first.
 
+  // void playMusic(String url) async {
+  //   if (isPlaying.value && currentSong.value != url) {
+  //     //false and not equal/ no song is currently play and no song has been selected yet
+  //     await audioPlayer.pause();
+  //     await audioPlayer.play(UrlSource(url));
+  //     currentSong.value = url;
+  //     isPlaying.value = true;
+  //     btnIcon.value = Icons.pause;
+  //   } else if (!isPlaying.value) {
+  //     //initially this condition apply
+  //     //false
+  //     await audioPlayer.play(UrlSource(url));
+  //     isPlaying.value = true;
+  //     btnIcon.value = Icons.play_circle;
+  //   }
+  // }
   void playMusic(String url) async {
-    if (isPlaying.value && currentSong.value != url) {
-      await audioPlayer.pause();
+    if (!isPlaying.value) {
+      //initially this condition apply
+      //false
       await audioPlayer.play(UrlSource(url));
-      currentSong.value = url;
-      isPlaying.value = true;
-      btnIcon.value = Icons.pause;
-    } else if (!isPlaying.value) {
-      await audioPlayer.play(UrlSource(url));
-      isPlaying.value = true;
-      btnIcon.value = Icons.pause;
+      // isPlaying.value = true;
     }
   }
 
+  ///Whether a song was playing before or not, the new song needs to be played.
   void pauseOrResumeMusic() {
     if (isPlaying.value) {
       audioPlayer.pause();
