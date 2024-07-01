@@ -9,6 +9,7 @@ abstract class Routes {
   static const USER_API = _Paths.USER_API;
   static const REGISTER = _Paths.REGISTER;
   static const SIGNIN = _Paths.SIGNIN;
+  static const THEME = _Paths.THEME;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const USER_API = '/user-api';
   static const REGISTER = '/register';
   static const SIGNIN = '/signin';
+  static const THEME = '/theme';
 }

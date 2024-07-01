@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:islamic_app/app/data/models/api_models.dart';
+import 'package:islamic_app/app/data/models/user_api_models.dart';
 
 class ApiService {
   Future<List<ApiModel>> fetchApi() async {

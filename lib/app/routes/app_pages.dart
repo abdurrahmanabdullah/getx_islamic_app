@@ -8,6 +8,8 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
+import '../modules/theme/bindings/theme_binding.dart';
+import '../modules/theme/views/theme_view.dart';
 import '../modules/user_api/bindings/user_api_binding.dart';
 import '../modules/user_api/views/user_api_view.dart';
 
@@ -16,7 +18,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.REGISTER;
+  static const INITIAL = Routes.SIGNIN;
 
   static final routes = [
     GetPage(
@@ -31,7 +33,7 @@ class AppPages {
     ),
     GetPage(
         name: _Paths.USER_API,
-        page: () => UserApiView(),
+        page: () => const UserApiView(),
         binding: UserApiBinding()),
     GetPage(
       name: _Paths.REGISTER,
@@ -40,8 +42,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SIGNIN,
-      page: () => const SigninView(),
+      page: () => SigninView(),
       binding: SigninBinding(),
+    ),
+    GetPage(
+      name: _Paths.THEME,
+      page: () => const ThemeView(),
+      binding: ThemeBinding(),
     ),
   ];
 }

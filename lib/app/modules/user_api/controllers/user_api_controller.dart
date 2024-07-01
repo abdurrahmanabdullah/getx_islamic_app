@@ -23,8 +23,8 @@
 // }
 
 import 'package:get/get.dart';
-import 'package:islamic_app/app/data/models/api_models.dart';
-import 'package:islamic_app/app/data/services/api_services.dart';
+import 'package:islamic_app/app/data/models/user_api_models.dart';
+import 'package:islamic_app/app/data/services/user_api_services.dart';
 
 class ApiController extends GetxController {
   var isLoading = true.obs;

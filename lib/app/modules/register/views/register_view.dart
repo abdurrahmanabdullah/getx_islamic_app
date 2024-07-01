@@ -57,6 +57,7 @@ class RegisterView extends GetView<RegisterController> {
                 ElevatedButton(
                   onPressed: () {
                     controller.signUp(context);
+
                     Get.toNamed(Routes.SIGNIN);
                   },
                   child: const Text('Register'),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../controllers/user_api_controller.dart';
 
 class UserApiView extends GetView<ApiController> {
-  const UserApiView({Key? key}) : super(key: key);
+  const UserApiView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

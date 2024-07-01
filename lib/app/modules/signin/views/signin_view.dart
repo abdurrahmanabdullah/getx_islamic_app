@@ -5,7 +5,8 @@ import 'package:islamic_app/app/routes/app_pages.dart';
 import '../controllers/signin_controller.dart';
 
 class SigninView extends GetView<SigninController> {
-  const SigninView({Key? key}) : super(key: key);
+  SigninView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +31,7 @@ class SigninView extends GetView<SigninController> {
             ElevatedButton(
               onPressed: () {
                 controller.signInWithEmailAndPassword(context);
+
                 Get.toNamed(Routes.DASHBOARD);
               },
               child: const Text('Sign In'),
