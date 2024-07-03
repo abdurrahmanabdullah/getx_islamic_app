@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
+import '../modules/firebase_crud/bindings/firebase_crud_binding.dart';
+import '../modules/firebase_crud/views/firebase_crud_view.dart';
 import '../modules/music_player/bindings/music_player_binding.dart';
 import '../modules/music_player/views/music_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -18,7 +20,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SIGNIN;
+  static const INITIAL = Routes.FIREBASE_CRUD;
 
   static final routes = [
     GetPage(
@@ -49,6 +51,11 @@ class AppPages {
       name: _Paths.THEME,
       page: () => const ThemeView(),
       binding: ThemeBinding(),
+    ),
+    GetPage(
+      name: _Paths.FIREBASE_CRUD,
+      page: () => const FirebaseCrudView(),
+      binding: FirebaseCrudBinding(),
     ),
   ];
 }

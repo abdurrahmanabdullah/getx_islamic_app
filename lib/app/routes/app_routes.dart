@@ -10,6 +10,7 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const SIGNIN = _Paths.SIGNIN;
   static const THEME = _Paths.THEME;
+  static const FIREBASE_CRUD = _Paths.FIREBASE_CRUD;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const SIGNIN = '/signin';
   static const THEME = '/theme';
+  static const FIREBASE_CRUD = '/firebase-crud';
 }
