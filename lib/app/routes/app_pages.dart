@@ -10,6 +10,8 @@ import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
+import '../modules/sqlite_database_crud/bindings/sqlite_database_crud_binding.dart';
+import '../modules/sqlite_database_crud/views/sqlite_database_crud_view.dart';
 import '../modules/theme/bindings/theme_binding.dart';
 import '../modules/theme/views/theme_view.dart';
 import '../modules/user_api/bindings/user_api_binding.dart';
@@ -20,7 +22,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.FIREBASE_CRUD;
+  static const INITIAL = Routes.SQLITE_DATABASE_CRUD;
 
   static final routes = [
     GetPage(
@@ -56,6 +58,11 @@ class AppPages {
       name: _Paths.FIREBASE_CRUD,
       page: () => const FirebaseCrudView(),
       binding: FirebaseCrudBinding(),
+    ),
+    GetPage(
+      name: _Paths.SQLITE_DATABASE_CRUD,
+      page: () => const SqliteDatabaseCrudView(),
+      binding: SqliteDatabaseCrudBinding(),
     ),
   ];
 }

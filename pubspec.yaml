@@ -20,6 +20,10 @@ dependencies:
   external_path: ^1.0.3
   flutter: 
     sdk: flutter
+  firebase_analytics: ^11.1.0
+  firebase_messaging: ^15.0.2
+  sqflite: ^2.3.3+1
+
 assets:
   -assets/
 dev_dependencies: 

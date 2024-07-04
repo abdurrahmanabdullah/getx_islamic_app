@@ -11,6 +11,7 @@ abstract class Routes {
   static const SIGNIN = _Paths.SIGNIN;
   static const THEME = _Paths.THEME;
   static const FIREBASE_CRUD = _Paths.FIREBASE_CRUD;
+  static const SQLITE_DATABASE_CRUD = _Paths.SQLITE_DATABASE_CRUD;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const SIGNIN = '/signin';
   static const THEME = '/theme';
   static const FIREBASE_CRUD = '/firebase-crud';
+  static const SQLITE_DATABASE_CRUD = '/sqlite-database-crud';
 }

@@ -5,7 +5,7 @@ import 'package:islamic_app/app/routes/app_pages.dart';
 import '../controllers/signin_controller.dart';
 
 class SigninView extends GetView<SigninController> {
-  SigninView({super.key});
+  const SigninView({super.key});
 
   @override
   Widget build(BuildContext context) {

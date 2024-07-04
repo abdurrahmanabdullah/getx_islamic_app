@@ -177,6 +177,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  firebase_analytics:
+    dependency: "direct main"
+    description:
+      name: firebase_analytics
+      sha256: "726596f4ac3352978238274c33234435e61bdb811484ea3d6a2b857bf47a2715"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.1.0"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      sha256: db445c727aa38038f91a3c6f6873d045a6740c79d03c0b6c61959e0c6ecfd771
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      sha256: "49a8a5ca0bf7fd7541e4b0915b8eb99816edc7a610d5078b89ae013a813fd567"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.8"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -225,6 +249,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.17.2"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: a1eb38242e072118650139f8485a78d8f12e6d9b6ae563808ca0fa406bdebaad
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.0.2"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      sha256: "98faf00cbe125bba136787e1678e7bf213f5e694e8f2615b94ad3d4bdcb0bdc2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.40"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      sha256: a38e9ccdd5dc4d7dc9eef0097b6a5a3c24842772035e1be103dc1b81d8d09f7c
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.8.10"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -493,6 +541,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sqflite:
+    dependency: "direct main"
+    description:
+      name: sqflite
+      sha256: a43e5a27235518c03ca238e7b4732cf35eabe863a369ceba6cbefa537a66f16d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3+1"
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      sha256: "3da423ce7baf868be70e2c0976c28a1bb2f73644268b7ffa7d2e08eab71f16a4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.4"
   stack_trace:
     dependency: transitive
     description:

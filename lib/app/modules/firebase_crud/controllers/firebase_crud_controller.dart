@@ -8,7 +8,7 @@ class FirebaseCrudController extends GetxController {
   final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController mobile = TextEditingController();
-  var isFormVisible = true.obs;
+  var isFormVisible = false.obs;
   String? downloadURL;
   void toggleFormVisibility() {
     isFormVisible.value = !isFormVisible.value;
@@ -32,32 +32,30 @@ class FirebaseCrudController extends GetxController {
   }
 
   Widget buildForm(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 40, left: 40),
-        child: Column(
-          children: [
-            TextField(
-              controller: name,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: email,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: mobile,
-              decoration: const InputDecoration(labelText: 'Mobile'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                saveFormToFireStore(context);
-              },
-              child: const Text('Save'),
-            )
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 40, left: 40),
+      child: Column(
+        children: [
+          TextField(
+            controller: name,
+            decoration: const InputDecoration(labelText: 'Name'),
+          ),
+          TextField(
+            controller: email,
+            decoration: const InputDecoration(labelText: 'Email'),
+          ),
+          TextField(
+            controller: mobile,
+            decoration: const InputDecoration(labelText: 'Mobile'),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              saveFormToFireStore(context);
+            },
+            child: const Text('Save'),
+          )
+        ],
       ),
     );
   }
@@ -79,10 +77,16 @@ class FirebaseCrudController extends GetxController {
   }
 
   Future<void> downloadURLExample() async {
-    downloadURL = await FirebaseStorage.instance
-        .ref()
-        .child("Qbanner.png")
-        .getDownloadURL();
+    try {
+      downloadURL = await FirebaseStorage.instance
+          .ref()
+          .child("Qbanner.png")
+          .getDownloadURL();
+      print('Download URL: $downloadURL');
+    } catch (e) {
+      print('Error fetching download URL: $e'); // Error handling
+      downloadURL = null;
+    }
   }
 
   Future getData() async {
