@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:islamic_app/app/modules/notelist_sqlite/views/note_details_view.dart';
+import 'package:islamic_app/app/modules/notelist_sqlite/views/notelist_sqlite_view.dart';
 
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
@@ -6,6 +8,7 @@ import '../modules/firebase_crud/bindings/firebase_crud_binding.dart';
 import '../modules/firebase_crud/views/firebase_crud_view.dart';
 import '../modules/music_player/bindings/music_player_binding.dart';
 import '../modules/music_player/views/music_view.dart';
+import '../modules/notelist_sqlite/bindings/notelist_sqlite_binding.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
@@ -22,7 +25,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.SQLITE_DATABASE_CRUD;
+  static const INITIAL = Routes.NOTELIST_SQLITE;
 
   static final routes = [
     GetPage(
@@ -63,6 +66,16 @@ class AppPages {
       name: _Paths.SQLITE_DATABASE_CRUD,
       page: () => const SqliteDatabaseCrudView(),
       binding: SqliteDatabaseCrudBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTELIST_SQLITE,
+      page: () => const NotelistSqliteView(),
+      binding: NotelistSqliteBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTE_DETAILS,
+      page: () => NoteDetailsView(),
+      binding: NotelistSqliteBinding(),
     ),
   ];
 }
