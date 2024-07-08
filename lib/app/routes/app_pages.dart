@@ -25,7 +25,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.NOTELIST_SQLITE;
+  static const INITIAL = Routes.SQLITE_DATABASE_CRUD;
 
   static final routes = [
     GetPage(

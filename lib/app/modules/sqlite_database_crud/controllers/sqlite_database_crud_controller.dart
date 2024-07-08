@@ -2,22 +2,89 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:islamic_app/app/data/db_helper/my_db_helper.dart';
+import 'package:islamic_app/app/data/models/todo_model.dart';
 
 class SqliteDatabaseCrudController extends GetxController {
-  late TextEditingController fNameEditingController;
-  late TextEditingController lNameEditingController;
-  late TextEditingController emailEditingController;
   Random random = Random();
-  int customerId = 0;
-  final count = 0.obs;
+  late TextEditingController titleController;
+  late TextEditingController descriptionController;
+
+  ///Rx class typically refers to an observable value from the GetX can automatically update their listeners whenever their value changes.
+  ///------vvi---------initializes todosSnapshot as a reactive variable holding an AsyncSnapshot instance with no initial data. ----vvi
+
+  Rx<AsyncSnapshot<List<TodoModels>>> todoSnapshot =
+      Rx<AsyncSnapshot<List<TodoModels>>>(const AsyncSnapshot.nothing());
+
+  ///save data
+  Future saveTodo() async {
+    try {
+      final todo = TodoModels(
+        id: random.nextInt(100),
+        title: titleController.text,
+        description: descriptionController.text,
+      );
+      await DatabaseHelper.instance.addTodos(todo);
+      print("Todo saved successfully");
+      titleController.clear();
+      descriptionController.clear();
+      fetchTodo();
+    } catch (e) {
+      print("Error saving todo: $e");
+    }
+  }
+
+  ///get data
+  Future<void> fetchTodo() async {
+    todoSnapshot.value = const AsyncSnapshot.waiting();
+
+    /// before fetching it will stay waiting stage
+    try {
+      List<TodoModels> todos = await DatabaseHelper.instance.getTodos();
+      todoSnapshot.value = todos.isNotEmpty
+          ? AsyncSnapshot.withData(ConnectionState.done, todos)
+          : const AsyncSnapshot.nothing();
+    } catch (e) {
+      todoSnapshot.value = AsyncSnapshot.withError(
+          ConnectionState.done, "Error fetching todos: $e");
+    }
+  }
+
+  ///delete data
+  Future<void> deleteTodoById(int? id) async {
+    try {
+      await DatabaseHelper.instance.deleteTodo(id);
+      print("Todo deleted successfully");
+      // Update todoSnapshot after deletion
+      fetchTodo();
+    } catch (e) {
+      print("Error deleting todo: $e");
+    }
+  }
+
+  ///update data
+  Future<void> updateToDo() async {
+    final todo = TodoModels(
+      id: random.nextInt(100),
+      title: titleController.text,
+      description: descriptionController.text,
+    );
+    await DatabaseHelper.instance.updateToDo(todo);
+  }
+
+  ///Complex Controllers: If your controller manages complex resources (like database connections, streams, or animations),
+  /// using onInit and onClose ensures these resources are managed properly throughout their lifecycle.
+  /// Memory Management: In scenarios where memory management is critical (e.g., mobile applications), onClose helps in releasing resources promptly to avoid memory leaks
   @override
   void onInit() {
-    fNameEditingController = TextEditingController();
-    lNameEditingController = TextEditingController();
-    emailEditingController = TextEditingController();
+    fetchTodo();
+
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
     super.onInit();
   }
 
+  ///onReady is called after the widget is rendered on the screen. This method is called after the controller is fully initialized and the initial UI is built.
   @override
   void onReady() {
     super.onReady();
@@ -27,6 +94,4 @@ class SqliteDatabaseCrudController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

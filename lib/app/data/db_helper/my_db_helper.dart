@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:islamic_app/app/data/models/sqlite_db_model.dart';
+import 'package:islamic_app/app/data/models/todo_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,8 +14,14 @@ class DatabaseHelper {
 
   Future<Database> get database async => _database ?? await _initDatabase();
 
+  /// database  jodi get na kore tobe initdatabase  call
+
+  ///logically kono variable bitore data inser korte getter setter use kora hoi
+
   Future<Database> _initDatabase() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
+
+    /// path ta ciniye deoa
 
     String path = join(documentDirectory.path, 'customer.db');
 
@@ -28,43 +34,46 @@ class DatabaseHelper {
 
   Future _onCreate(Database db, int version) async {
     await db.execute("""
-   
+
   CREATE TABLE customer(
     id INTEGER PRIMARY KEY,
-    first_name TEXT,
-    last_name TEXT,
-    email TEXT
+   title TEXT,
+   description TEXT
   )
 
   """);
+    print("Table created");
   }
 
-  Future<int> addCustomer(CustomerModel customerModel) async {
+  /// data  insert  korar jonne => to json
+  /// data read korar jonne => from json
+  /// Save data
+  Future<int> addTodos(TodoModels todoData) async {
     Database db = await instance.database;
-    return await db.insert("customer", customerModel.toMap());
+    return await db.insert("customer", todoData.toJson());
   }
 
-  Future<List<CustomerModel>> getCustomer() async {
+  ///Fetch Data
+  Future<List<TodoModels>> getTodos() async {
     Database db = await instance.database;
-    var customer = await db.query("customer", orderBy: "id");
-
-    List<CustomerModel> customerList = customer.isNotEmpty
-        ? customer.map((data) => CustomerModel.fromMap(data)).toList()
+    var todos = await db.query('customer', orderBy: "id");
+    List<TodoModels> todo = todos.isNotEmpty
+        ? todos.map((e) => TodoModels.fromJson(e)).toList()
         : [];
-
-    return customerList;
+    return todo;
   }
 
-  Future<int> updateCustomer(CustomerModel customerModel) async {
+  ///Delete
+  Future deleteTodo(int? id) async {
     Database db = await instance.database;
-
-    return await db.update("customer", customerModel.toMap(),
-        where: "id = ?", whereArgs: [customerModel.id]);
+    return await db.delete("customer", where: 'id=?', whereArgs: [id]);
   }
 
-  Future<int> deleteCustomer(int? id) async {
-    Database db = await instance.database;
+  ///update
 
-    return await db.delete("customer", where: "id = ?", whereArgs: [id]);
+  Future updateToDo(TodoModels todo) async {
+    Database db = await instance.database;
+    return await db
+        .update('customer', todo.toJson(), where: "id=?", whereArgs: [todo.id]);
   }
 }

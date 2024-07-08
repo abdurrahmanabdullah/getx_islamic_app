@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:islamic_app/app/data/db_helper/my_db_helper.dart';
-import 'package:islamic_app/app/data/models/sqlite_db_model.dart';
+import 'package:islamic_app/app/data/models/todo_model.dart';
 
 import '../controllers/sqlite_database_crud_controller.dart';
 
 class SqliteDatabaseCrudView extends GetView<SqliteDatabaseCrudController> {
   const SqliteDatabaseCrudView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sqlite"),
+        title: const Text("Sqlite CRUD"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -20,87 +20,111 @@ class SqliteDatabaseCrudView extends GetView<SqliteDatabaseCrudController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
-                controller: controller.fNameEditingController,
-                decoration: const InputDecoration(hintText: "First Name"),
+                controller: controller.titleController,
+                decoration: const InputDecoration(hintText: "Title"),
               ),
               TextField(
-                controller: controller.lNameEditingController,
-                decoration: const InputDecoration(hintText: "Last Name"),
+                controller: controller.descriptionController,
+                decoration: const InputDecoration(hintText: "Description"),
               ),
-              TextField(
-                controller: controller.emailEditingController,
-                decoration: const InputDecoration(hintText: "Email"),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () async {
-                      final customer = CustomerModel(
-                          id: controller.random.nextInt(100),
-                          firstName: controller.fNameEditingController.text,
-                          lastName: controller.lNameEditingController.text,
-                          email: controller.emailEditingController.text);
-
-                      await DatabaseHelper.instance.addCustomer(customer);
+                    onPressed: () {
+                      controller.saveTodo();
                     },
-                    child: const Text("Save"),
+                    child: const Text(
+                      "Save",
+                      textScaler: TextScaler.linear(1.5),
+                    ),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      final customer = CustomerModel(
-                          id: controller.customerId,
-                          firstName: controller.fNameEditingController.text,
-                          lastName: controller.lNameEditingController.text,
-                          email: controller.emailEditingController.text);
-                      await DatabaseHelper.instance.updateCustomer(customer);
-                      controller.fNameEditingController.clear();
+                    onPressed: () {
+                      final todo = TodoModels(
+                        id: controller.random.nextInt(100),
+                        title: controller.titleController.text,
+                        description: controller.descriptionController.text,
+                      );
                     },
-                    child: const Text("Update"),
+                    child: const Text(
+                      "Update",
+                      textScaler: TextScaler.linear(1.5),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(
-                  height: 400,
-                  child: FutureBuilder(
-                      future: DatabaseHelper.instance.getCustomer(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<CustomerModel>> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Text("Loading......");
-                        }
-                        return ListView(
-                          children: snapshot.data!.map((customer) {
-                            return ListTile(
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                      onPressed: () async {
-                                        await DatabaseHelper.instance
-                                            .deleteCustomer(customer.id);
-                                      },
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      )),
-                                ],
-                              ),
-                              title: Text("${customer.firstName}" +
-                                  "${customer.lastName}"),
-                              subtitle: Text("${customer.email}"),
-                            );
-                          }).toList(),
+              // FutureBuilder(
+              //   future: DatabaseHelper.instance.getTodos(),
+              //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const Center(child: CircularProgressIndicator());
+              //     } else if (snapshot.hasError) {
+              //       return const Center(child: Text('Error occurred'));
+              //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              //       return const Center(child: Text('No data found'));
+              //     } else {
+              //       return ListView.builder(
+              //         shrinkWrap: true,
+              //         itemCount: snapshot.data!.length,
+              //         itemBuilder: (context, index) {
+              //           final todo = snapshot.data![index];
+              //           return ListTile(
+              //             title: Text(todo.title!),
+              //             subtitle: Text(todo.description ?? ''),
+              //           );
+              //         },
+              //       );
+              //     }
+              //   },
+              // )
+
+              Obx(
+                () {
+                  if (controller.todoSnapshot.value.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (controller.todoSnapshot.value.hasError) {
+                    return Center(
+                        child: Text(
+                            'Error occurred: ${controller.todoSnapshot.value.error}'));
+                  } else if (!controller.todoSnapshot.value.hasData ||
+                      controller.todoSnapshot.value.data!.isEmpty) {
+                    return const Center(child: Text('No data found'));
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: controller.todoSnapshot.value.data!.length,
+                      itemBuilder: (context, index) {
+                        final todo = controller.todoSnapshot.value.data![index];
+                        return ListTile(
+                          leading: IconButton(
+                              onPressed: () {
+                                controller.titleController.text =
+                                    todo.title ?? '';
+                                controller.descriptionController.text =
+                                    todo.description ?? '';
+                              },
+                              icon: const Icon(Icons.edit)),
+                          title: Text(todo.title!),
+                          subtitle: Text(todo.description ?? ''),
+                          trailing: IconButton(
+                              onPressed: () async {
+                                controller.deleteTodoById(todo.id);
+                              },
+                              icon: const Icon(Icons.delete)),
                         );
-                      }))
+                      },
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
