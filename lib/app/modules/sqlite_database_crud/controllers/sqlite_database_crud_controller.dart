@@ -9,6 +9,7 @@ class SqliteDatabaseCrudController extends GetxController {
   Random random = Random();
   late TextEditingController titleController;
   late TextEditingController descriptionController;
+  int? currentId;
 
   ///Rx class typically refers to an observable value from the GetX can automatically update their listeners whenever their value changes.
   ///------vvi---------initializes todosSnapshot as a reactive variable holding an AsyncSnapshot instance with no initial data. ----vvi
@@ -32,6 +33,29 @@ class SqliteDatabaseCrudController extends GetxController {
     } catch (e) {
       print("Error saving todo: $e");
     }
+  }
+
+  ///update data
+  ///
+  void edit(TodoModels todo) {
+    titleController.text = todo.title ?? '';
+    descriptionController.text = todo.description ?? '';
+    currentId = todo.id;
+  }
+
+  Future updateToDo() async {
+    // Ensure an id is set
+    if (currentId == null) return;
+    final todo = TodoModels(
+      id: currentId!,
+      title: titleController.text,
+      description: descriptionController.text,
+    );
+    await DatabaseHelper.instance.updateToDo(todo);
+    titleController.clear();
+    descriptionController.clear();
+    currentId = null; // Reset currentId after update
+    fetchTodo();
   }
 
   ///get data
@@ -60,16 +84,6 @@ class SqliteDatabaseCrudController extends GetxController {
     } catch (e) {
       print("Error deleting todo: $e");
     }
-  }
-
-  ///update data
-  Future<void> updateToDo() async {
-    final todo = TodoModels(
-      id: random.nextInt(100),
-      title: titleController.text,
-      description: descriptionController.text,
-    );
-    await DatabaseHelper.instance.updateToDo(todo);
   }
 
   ///Complex Controllers: If your controller manages complex resources (like database connections, streams, or animations),

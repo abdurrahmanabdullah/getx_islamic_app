@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:islamic_app/app/data/models/todo_model.dart';
 
 import '../controllers/sqlite_database_crud_controller.dart';
 
@@ -44,11 +43,17 @@ class SqliteDatabaseCrudView extends GetView<SqliteDatabaseCrudController> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      final todo = TodoModels(
-                        id: controller.random.nextInt(100),
-                        title: controller.titleController.text,
-                        description: controller.descriptionController.text,
-                      );
+                      controller.updateToDo();
+                      // controller.titleController.text =
+                      //     todo.title ?? '';
+                      // controller.descriptionController.text =
+                      //     todo.description ?? '';
+
+                      // final todo = TodoModels(
+                      //   id: controller.random.nextInt(100),
+                      //   title: controller.titleController.text,
+                      //   description: controller.descriptionController.text,
+                      // );
                     },
                     child: const Text(
                       "Update",
@@ -103,10 +108,7 @@ class SqliteDatabaseCrudView extends GetView<SqliteDatabaseCrudController> {
                         return ListTile(
                           leading: IconButton(
                               onPressed: () {
-                                controller.titleController.text =
-                                    todo.title ?? '';
-                                controller.descriptionController.text =
-                                    todo.description ?? '';
+                                controller.edit(todo);
                               },
                               icon: const Icon(Icons.edit)),
                           title: Text(todo.title!),
